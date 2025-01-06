@@ -1,13 +1,16 @@
 
+WIP PLEASE COME BACK LATER
+
+
 # Introduction 
-
-
 
 [Luau](https://luau.org/) is an open source general purpose programming language that is developed and maintained by [Roblox](https://roblox.com). Luau is a superset of [Lua](https://www.lua.org/) and introduce many new features most notably typing! It is often used to develop experiences for [Roblox](https://roblox.com). This is guide is mainly written for folks who have some familiarity with programming and would like to start using Luau! If you are new to programming and would like to learn Luau for the purpose of writing your own Roblox game, we suggest you get started on the [creator docs site](https://create.roblox.com/docs)!
 
 We aim to keep as much of this content as general as accessible as possible and many parts will explicity mention how to use Luau with Roblox. Sections that are entirely new to Luau are tagged with `Luau`. If you are skimming through the guide because you are already familiar with Lua, these are the sections you want to pay attention to!
 
-This guide was started as a Roblox Hack Week project. We aim to slowly add content over time until this is a complete Luau guide and working reference!
+This guide takes much inspiration (and some content) from the freely available online [Programming in Lua](https://www.lua.org/pil/) book as well as the resources on the [Luau website](https://luau.org/). Several sections currently link out to the Programming in Lua and you can easily infer the Luau types for the content in that guide after reading this one!
+
+This guide was started as a Roblox Hack Week project. We aim to grow and evolve this guide over time and the current version should already be more than enough to really get you going with Luau!
 
 # Additional Resources
 
@@ -105,6 +108,7 @@ All variables in Luau are typed either implicitly on explicitly. We'll go into t
 local myExplicitlyTypedNumber : number = 76
 local myImplicitlyTypedNumber = 32
 ```
+
 
 ## Control
 
@@ -279,7 +283,7 @@ The following special characters can be escaped:
 - `\[`: left square bracket  
 - `\]`: right square bracket  
 
-Luau comes built in with a string manipulation functions in its standard library. You can see a list of methods available [here](https://luau.org/library#string-library)
+Luau comes built in with very useful string manipulation functions in its standard library. You can see a list of methods available [here](https://luau.org/library#string-library). The Programming in Lua book has a [good section](https://www.lua.org/pil/20.html) on the `string` library if you are looking for more guidance.
 
 ## boolean
 
@@ -458,8 +462,15 @@ In general though, it is this author's opinion that it is better to always expli
 ## table types, table indexers and intersection types
 This is SUPER DUPER important. This is covered in the table section!
 
-## userdata types
+## thread types
 
+The `thread` type are used to represent a coroutine. These can be manipulated with the builtin [coroutine library](https://www.lua.org/pil/9.html). The Programming in Lua book has a [good section](https://www.lua.org/pil/9.html) on coroutines if you are interested in learning more about them.
+
+```
+If you are working in Roblox, coroutines are often managed by the [task library](https://create.roblox.com/docs/reference/engine/libraries/task). These methods create coroutines that are managed by the Roblox engine's TaskSchedule such that should not (ever) manually `coroutine.yield` and `coroutine.resume` them.
+```
+
+## userdata types
 
 Luau is intended for use as an embedded language. That's why if you've ever read the Lua manual you'll notice that the majority is dedicated to the [C API for embedding Lua](https://www.lua.org/manual/5.1/manual.html#3) in your program <sub>(yes, I linked the 5.1 Lua manual... we still need to write one for Luau...)</sub>
 
@@ -474,13 +485,72 @@ myInstance.location = "Canada" -- `location` is not a property of myInstance, th
 
 Roblox data types are all documented on the very useful [Roblox Creator Docs](https://create.roblox.com/docs/reference/engine) site.
 
-
 ## typecasting
 
-<TODO>
+You can force a value to be a certain type with the `::` symbol. This is called typecasting. You can only typecast if the value type shares a subtype with the type being casted too. Luau can not verify that the typecast will be valid during runtime. For this reason avoid typecasting as much as possible.
+
+```
+local a : string | number = 1
+local b : number = a -- not ok
+local c : number = a :: number -- ok
+local d : string = x :: string -- ok, but d will not actually be a string
+print(d) -- error! can't print a number! Don't typecast!
+```
+
+Typecasting is mainly useful when working with untyped Lua code or when you need to help along the typechecker with inference in some scenarios which will likely no longer be needed when the new typechecker is released. 
+
+
+# Value + Reference + Immutable types
+
+In Luau, variables are either value or reference types. The value of a variable is the actual data that the variable holds. The reference of a variable is the location in memory where the data is stored.
+
+The following primitive types in Luau are value types:
+
+- `nil`
+- `number`
+- `boolean`
+
+The remaining primitives are reference types. Note that while `string` is a reference type, they behave like value types because they are immutable (more on this later).
+
+
+```
+local a = 5
+local b = a
+b = 6
+print(a) -- prints 5
+print(b) -- prints 6
+```
+
+In the above example, `a` is of type `number` which is a value type. The value of `a` is copied to `b` so changing `b` does not affect `a`. 
+
+```
+local a = {5}
+local b = a
+b[1] = 6
+print(a[1]) -- prints 6
+print(b[1]) -- prints 6
+``` 
+
+In the above example, `a` is a table type which is a reference type. The reference of `a` is copied to `b` so changing `b` does affect `a`.
+
+In addition though, there are immutable references. Their contained values can never change. These behave like value types with respect to assignment (`=`). The `string` type is an example of an immutable reference type.
+
+``` 
+local a = "hello"
+local b = a
+b = "world"
+print(a) -- prints "hello"
+print(b) -- prints "world"
+```
+
+Note that all value types are also immutable. The only other immutable references in Luau are frozen tables. These are tables that have been made immutable with the `table.freeze` function. We will talk about them more in the table section. 
 
 
 # Tables (Introduction)
+
+Tables are the heart and soul of Luau
+
+tables aret he be all end all data structure in Lua. Tables are still just as iportant in Luau although we added `vector` and `buffer` types )
 
 ## As Arrays
 ## As Objects
@@ -496,16 +566,16 @@ Roblox data types are all documented on the very useful [Roblox Creator Docs](ht
 
 
 # Built in Libraries
-Luau ships with several built in libraries for common operations. We cover some of the more useful ones here. For a complete list, see [lua.org/library](https://luau.org/library).
+
+Luau ships with several built in libraries for common operations. Some have already been covered and some more useful ones are covered here. For a complete list, see [lua.org/library](https://luau.org/library).
 
 ## String Manipulation
 ## assert/error
 ## pcall
 ## math
 ## table (maybe cover in tabel section)
-## coroutine
-## bit32
-
+## io
+The `io` provides functions for reading and writing files. These methods are usually not permitted when using Luau as an embedding scripting language for security reasons and this is the case for Roblox. The Programming in Lua book has a [good section](https://www.lua.org/pil/21.html) on the `io` library if you are interested in learning more about it.
 
 
 
@@ -537,6 +607,32 @@ Luau ships with several built in libraries for common operations. We cover some 
 
 
 # Advanced Topics
+
 ## Metatables
+
+
+
+
 ## Weak Tables
 
+Luau is a managed language meaning it's objects are automatically "garbage collected" and it's memory freed when there are no longer any "strong references" to that object. In general, anytime you assign an object to a variable or table, it becomes a strong reference to that object. A "weak reference" is a reference to an object that does not prevent the object from being garbage collected. Weak references are only available as keys and values in Luau tables. To create a table with weak keys, set the `__mode` field of the metatable to `"k"`. To create a table with weak values, set the `__mode` field of the metatable to `"v"`. To create a table with weak keys and values, set the `__mode` field of the metatable to `"kv"`.
+
+```
+a = {}
+b = {}
+setmetatable(a, b)
+b.__mode = "k"         -- table `a` has weak keys now
+local key = {} 
+a[key] = 1
+key = {}               -- this replaces the only strong reference to the `{}` object created earlier, there is still a weak reference in the table
+a[key] = 2
+
+collectgarbage()       -- force a garbage collection cycle
+
+-- this will only print 2, because the 1 key was garbage collected and the corresponding value gets removed from the table
+for k, v in pairs(a) do 
+    print(v) 
+end
+```
+
+In the example above, the entry created with `a[key] = 1` gets removed when the only strong reference to the key object is removed. A similar thing happens with weak values.
