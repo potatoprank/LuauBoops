@@ -547,14 +547,188 @@ Note that all value types are also immutable. The only other immutable reference
 
 
 # Tables (Introduction)
+Tables are the do-all data structure in Lua. While there are a few more options in Luau, tables remain super important so it's important to understand them well! 
 
-Tables are the heart and soul of Luau
+## Basics
+Tables are associative arrays (AKA dictionaries/maps) and can be indexed with strings, numbers, or any other Luau value except `nil`!
 
-tables aret he be all end all data structure in Lua. Tables are still just as iportant in Luau although we added `vector` and `buffer` types )
+To create an empty table:
+
+```
+local myTable = {}
+```
+
+To set or modify values in a table:
+
+```
+myTable.name = "Alice"
+myTable.age = 25
+``` 
+
+To create a table with some initial values:
+
+```
+local myTable = {name = "Alice", age = 25}
+```
+
+To access a value in a table:
+
+```
+print(myTable.name) -- prints "Alice"
+print(myTable.age) -- prints 25
+```
+
+To explicitly define the type of the above table:
+
+```
+local myTable : {name: string, age: number} = {name = "Alice", age = 25}
+```
+
+To delete a key from a table:
+
+```
+myTable.name = nil
+```
+
+To check if a key exists in a table:
+
+```
+if myTable.name != nil then
+    print("name exists")
+else
+    print("name does not exist")
+end
+```
 
 ## As Arrays
+
+Luau contains a set of built in functions for using tables as arrays. The "array" portion of the table includes all the elements with continuous integer keys starting at 1. You can instantiate such an array with the following syntax:
+
+```
+local myArray = {c, o, w}
+print(myArray[1] .. myArray[2] .. myArray[3]) -- prints "cow"
+```
+
+Luau comes with a [bunch of useful functions](https://luau.org/library#table-library) for manipulating tables as arrays. For example:
+
+To add an element to the end of an array:
+
+```
+table.insert(myArray, "s")
+print(myArray[1] .. myArray[2] .. myArray[3] .. myArray[4]) -- prints "cows"
+```
+
+To remove an element from an array:
+
+```
+table.remove(myArray, 4)
+print(myArray[4]) -- prints nothing
+```
+
+Luau tables have no order however we can at least iterate over the array portion of a table in the expected order. To "sort" a table, we can use the `sort` function which sorts the values in the array portion of the table (changing their indices). 
+
+```
+local myArray = {w, o, c}
+print(myArray[1] .. myArray[2] .. myArray[3]) -- prints "woc"
+sort(myArray)
+print(myArray[1] .. myArray[2] .. myArray[3]) -- prints "cow"
+```
+
+For more details on sort, see this [article](https://www.lua.org/pil/19.3.html) in the Programming in Lua book.
+
+Using tables as arrays has one drawback. Tables can not hold `nil` values as this simply deletes the key so arrays can not hold `nil` values as this would break the continuous integer key requirement. To work around this, you can use the `getn` and `setn` functions. See [this article](https://www.lua.org/pil/19.1.html) in the Programming in Lua book for more information.
+
+
+## Iterating over tables
+
+
+In Lua, iterators were required to `for` loop over element in tables. To learn more about iterators, see the article on this topic in the [Programming in Lua](https://www.lua.org/pil/7.1.html) book. In Luau we can iterator over table key value pairs directly:
+
+```
+local myTable = {name = "Alice", age = 25}
+for key, value in myTable do
+    print(key, value)
+end
+-- prints "name Alice" followed by "age 25"
+```
+
+Iteration order goes through continous numeric keys starting at 1 first (i.e. 1...#myTable), and then through the remaining elements with no guarantee on order. This is the same behavior as iterating with `pairs`. Modifying table entries for any other keys besides the current one in the iterating results in undefined behavior.
+
+To iterate over only the numeric keys of a table, you can use the `ipairs` function:
+
+```
+local myTable = {"a", "b", "c", cat = "meow"}
+for i, value in ipairs(myTable) do
+    print(i, value)
+end
+-- prints "1 a" followed by "2 b" followed by "3 c"
+```
+
+## Table Keys
+In the above examples, we used built in Luau syntax that automatically defines literal numeric and string keys. However, you can use any Luau value as a key in a table including values contained in variables. The generic syntax for accessing a value in a table is `myTable[key]` where `key` is some luau value.
+
+```
+local myTable = {}
+local key = "name"
+myTable[key] = "Alice"
+print(myTable[key]) -- prints "Alice"
+print(myTable.name) -- prints "Alice"
+myTable["age"] = 25
+print(myTable["age"]) -- prints 25
+print(myTable.age) -- prints 25
+``` 
+
+You can also use this syntax when constructing tables
+    
+```
+local nameKey = "name"
+local ageKey
+local myTable = {
+    [nameKey] = "Alice"
+    [ageKey] = 25
+}
+print(myTable.name, myTable.age) -- prints "Alice 25"
+```
+
 ## As Objects
+Tables are often used as objects in Lua. A common pattern is to create an explicitly typed table to representy our object and create a set of functions that operate on that table. 
+
+```
+type Person = {
+    name: string,
+    age: number
+}
+
+local function Person_create(name : string, age : number) : Person
+    return {name = name, age = age}
+end
+
+local function Person_greet(person : Person) : string
+    return "Yo wassup, " .. person.name
+end
+
+local function Person_growOlder(person : Person) : Person
+    return {name = person.name, age = person.age + 1}
+end
+```
+
+You can also use metatables to create objects with methods built into them that look more like traditional object oriented programming. It is this author's opinion that this pattern should be avoided. This pattern is covered in the advanced section as it is apparently many folks do not share this author's opinion.
+
 ## Metatables
+Metatables allow you to override certain behavior in tables. Metatables are used extensively by other libraries often to create more "convenient" interfaces. It is this author's opinions that metatables should be avoided perhaps the one exception of making container classes.  Metatables are covered in the advanced section. 
+
+## Table Gotchas
+Here are some common gotchas when working with tables in Lua. Pay careful attention especially if you are coming from another language:
+
+- Tables as arrays are 1-indexed. The first element of an array is at index 1, not 0. There is nothing preventing you from using 0 as an index, but the built-in functions for working with tables as arrays will not work as expected.
+- Tables as arrays can still hold non-continuous-numeric keys. These will simply not be part of the "array" insofar as the built-in array manipulation functions are concerned. For example if you have `t = {1, 2, 3, [5] = 5}` the length `#t` will be `3`.
+- the `#` operator only returns the length of the array portion of the table. It will not return the total number of elements in the table!!!!!! To get the total number of elements in a table, you must iterate over the table and count them yourself 😭.
+- Using `ipairs` to iterate over a table as an array will stop at the first non-continuous-numeric key. 
+- A `nil` value to a key in a table is equivalent to that key not existing in the table. To delete a key from a table, you can assign `nil` to it.
+- Tables have no order to them!!!! To create an ordered set, you can use tables as arrays and sort them with the `sort` function.
+- Tables are passed by reference. When you pass a table to a function, you are passing a reference to the table, not a copy of the table. This means that if you modify the table in the function, the changes will be reflected outside of the function.
+- Luau table types take a bit to get use to as the static type checker will do it's best to update the type as you add and remove items from the table. Understanding how the typechecker works for tables will eliminate a lot of potential bugs so it's worth getting use to!!
+
 ### Object Oriented Programming 🙅🏻‍♀️
 ### Functional Programming 🙆‍♀️
 ## new Luau stuff (maybe move to advanced section)
@@ -611,7 +785,7 @@ The `io` provides functions for reading and writing files. These methods are usu
 ## Metatables
 
 
-
+## Frozen Tables
 
 ## Weak Tables
 
