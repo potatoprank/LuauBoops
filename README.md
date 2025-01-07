@@ -462,29 +462,6 @@ In general though, it is this author's opinion that it is better to always expli
 ## table types, table indexers and intersection types
 This is SUPER DUPER important. This is covered in the table section!
 
-## thread types
-
-The `thread` type are used to represent a coroutine. These can be manipulated with the builtin [coroutine library](https://www.lua.org/pil/9.html). The Programming in Lua book has a [good section](https://www.lua.org/pil/9.html) on coroutines if you are interested in learning more about them.
-
-```
-If you are working in Roblox, coroutines are often managed by the [task library](https://create.roblox.com/docs/reference/engine/libraries/task). These methods create coroutines that are managed by the Roblox engine's TaskSchedule such that should not (ever) manually `coroutine.yield` and `coroutine.resume` them.
-```
-
-## userdata types
-
-Luau is intended for use as an embedded language. That's why if you've ever read the Lua manual you'll notice that the majority is dedicated to the [C API for embedding Lua](https://www.lua.org/manual/5.1/manual.html#3) in your program <sub>(yes, I linked the 5.1 Lua manual... we still need to write one for Luau...)</sub>
-
-In order for Luau to be useful as an embedded language, it must be able to interact with the data types in the program it is embedded in. Examples of Roblox data types are things like `Instance` and `Player`. These data types are called "userdata" types. These are not to be confused with table types which can have new items added and removed. Userdata types have static definitions. 
-
-
-```
-Instance myInstance = workspace.FindFirstChild("bearModel")
-myInstance.Name = "bear" -- `Name` is a property of the `Instance` datatype so this is valid
-myInstance.location = "Canada" -- `location` is not a property of myInstance, this is not valid!
-```
-
-Roblox data types are all documented on the very useful [Roblox Creator Docs](https://create.roblox.com/docs/reference/engine) site.
-
 ## typecasting
 
 You can force a value to be a certain type with the `::` symbol. This is called typecasting. You can only typecast if the value type shares a subtype with the type being casted too. Luau can not verify that the typecast will be valid during runtime. For this reason avoid typecasting as much as possible.
@@ -729,9 +706,7 @@ Here are some common gotchas when working with tables in Lua. Pay careful attent
 - Tables are passed by reference. When you pass a table to a function, you are passing a reference to the table, not a copy of the table. This means that if you modify the table in the function, the changes will be reflected outside of the function.
 - Luau table types take a bit to get use to as the static type checker will do it's best to update the type as you add and remove items from the table. Understanding how the typechecker works for tables will eliminate a lot of potential bugs so it's worth getting use to!!
 
-### Object Oriented Programming 🙅🏻‍♀️
-### Functional Programming 🙆‍♀️
-## new Luau stuff (maybe move to advanced section)
+## new Luau table stuff (maybe move to advanced section)
 
 
 # Functions
@@ -756,9 +731,42 @@ The `io` provides functions for reading and writing files. These methods are usu
 
 # New Luau Primitives!
 
-## Vector
-## Buffer
-## Thread
+
+## userdata types
+
+Luau is intended for use as an embedded language. That's why if you've ever read the Lua manual you'll notice that the majority is dedicated to the [C API for embedding Lua](https://www.lua.org/manual/5.1/manual.html#3) in your program <sub>(yes, I linked the 5.1 Lua manual... we still need to write one for Luau...)</sub>
+
+In order for Luau to be useful as an embedded language, it must be able to interact with the data types in the program it is embedded in. Examples of Roblox data types are things like `Instance` and `Player`. These data types are called "userdata" types. These are not to be confused with table types which can have new items added and removed. Userdata types have static definitions. 
+
+
+```
+Instance myInstance = workspace.FindFirstChild("bearModel")
+myInstance.Name = "bear" -- `Name` is a property of the `Instance` datatype so this is valid
+myInstance.location = "Canada" -- `location` is not a property of myInstance, this is not valid!
+```
+
+Roblox data types are all documented on the very useful [Roblox Creator Docs](https://create.roblox.com/docs/reference/engine) site.
+
+## vector
+
+The Luau vector type represents a 3D vector. This is in fact the same type as the differently named [`Vector3` type in Roblox](https://create.roblox.com/docs/reference/engine/datatypes/Vector3) although currently the type checker thinks they are different (we'll fix it soon). You can use either the bulit in vector library or the Roblox API variants. The vector library variants are more portable!
+
+The vector type is either 3 or 4 dimensions (x,y,z + w) depending on what the compile time `LUA_VECTOR_SIZE` flag is set to. 3 component vectors work like you would expect representing x y and z components. Roblox is configered to use 3 component vectors. 4 component vectors are needed for affine transformations which allow for things like translations to be represented as a matrices. This is super duper useful for computer graphics and much less useful for most games on Roblox. 4 component vectors are not useable on Roblox and thus are not covered in this guide.
+
+To learn more about the vector library, see the [Luau Vector Library](https://luau.org/library#vector-library) page.
+
+## buffer
+
+The buffer is a fixed size mutable (as in you can modify it's contents) block of memory. All buffer operations are done through the built in `buffer` library. Buffers are useful in applications where bandwidth or performance is critical. Otherwise consider using tables as arrays instead. Note that all buffer library operations convert the contents to and from the `number` or `string` type but the internal representation is still a byte array.
+
+To learn more about the buffer library, see the [Luau Buffer Library](https://luau.org/library#buffer-library) page.
+
+## thread 
+
+The `thread` type are used to represent a coroutine. These can be manipulated with the builtin [coroutine library](https://www.lua.org/pil/9.html). The Programming in Lua book has a [good section](https://www.lua.org/pil/9.html) on coroutines if you are interested in learning more about them.
+
+If you are working in Roblox, coroutines are often managed by the [task library](https://create.roblox.com/docs/reference/engine/libraries/task). These methods create coroutines that are managed by the Roblox engine's TaskSchedule such that should not (ever) manually `coroutine.yield` and `coroutine.resume` them. The `thread` type and the `coroutine` type mentioned on the Roblox API website are the same.
+
 
 # New Luau Features!
 <TODO>
@@ -783,6 +791,9 @@ The `io` provides functions for reading and writing files. These methods are usu
 # Advanced Topics
 
 ## Metatables
+
+### Object Oriented Programming 🙅🏻‍♀️
+### Functional Programming 🙆‍♀️
 
 
 ## Frozen Tables
