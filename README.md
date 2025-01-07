@@ -18,7 +18,6 @@ This guide was started as a Roblox Hack Week project. We aim to grow and evolve 
 - [Luau lang website](https://luau.org/library)
 - [Roblox Creator Docs site](https://create.roblox.com/docs)
 
-
 # Getting Started
 
 While Luau can be used as a standalone language, it is almost always embedded as a scripting language in another program such as Roblox. The easiest way to get started with writing and running Luau code is with the [Luau online interpreter](https://luau.org/demo). The next easiest way is...
@@ -776,16 +775,25 @@ If you are working in Roblox, coroutines are often managed by the [task library]
 
 
 # Luau Tooling
-<TODO>
+
+Luau is open source and has a number super useful community supported tooling!
+
+<TODO lune, wally, npm, linter, useful libraries,>
+
+Please see the [Third Party Tools](https://create.roblox.com/docs/projects/external-tools) for using Luau tooling with Roblox.
 
 
 # Roblox UI in Luau
 ## native
-## Fusion
-## React
+All of Roblox's [UI instances](https://create.roblox.com/docs/ui) can be managed with Luau code allowing you to generate UI entirely from Luau. This is the simplest create UI in Roblox. Many creators will author their UI in the Roblox Studio editor and then add Luau code to manage the interactions. You can also create your UI entirely from Luau code.
 
+Using native UI is the simplest way to create UI in Roblox. You may find that you will start running into limitations as your UI needs become mor demanding and complex. Thankfully, there are UI libraries that can help you with this!
 
+## fusion
+Fusion is a declarative UI, state management and animation library for Roblox. This is an awesome choice for building UI in Roblox and relatively easy to pick up. Please see [https://elttob.uk/Fusion/0.2/](fusion) for more information on Fusion.
 
+## react-lua
+React-lua is a port of React to Luau. React is an industry standard for many web and mobile apps these days and modern React has never been easier to use. Nonetheless the learning curve is steeper than using native UI or fusion. If you are new to programming avoid react-lua. Please see my [react-lua](https://github.com/minimapletinytools/react-lua-tutorial/blob/main/react-lua-expert.md) tutorial :).
 
 
 # Advanced Topics
@@ -797,9 +805,10 @@ If you are working in Roblox, coroutines are often managed by the [task library]
 
 
 ## Frozen Tables
+<TODO>
+See the [table library](https://luau.org/library#table-library) for more information on frozen tables.
 
 ## Weak Tables
-
 Luau is a managed language meaning it's objects are automatically "garbage collected" and it's memory freed when there are no longer any "strong references" to that object. In general, anytime you assign an object to a variable or table, it becomes a strong reference to that object. A "weak reference" is a reference to an object that does not prevent the object from being garbage collected. Weak references are only available as keys and values in Luau tables. To create a table with weak keys, set the `__mode` field of the metatable to `"k"`. To create a table with weak values, set the `__mode` field of the metatable to `"v"`. To create a table with weak keys and values, set the `__mode` field of the metatable to `"kv"`.
 
 ```
@@ -821,3 +830,7 @@ end
 ```
 
 In the example above, the entry created with `a[key] = 1` gets removed when the only strong reference to the key object is removed. A similar thing happens with weak values.
+
+
+## Native Code Generation
+See [https://create.roblox.com/docs/luau/native-code-gen](https://create.roblox.com/docs/luau/native-code-gen)
