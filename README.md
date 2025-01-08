@@ -709,9 +709,65 @@ Here are some common gotchas when working with tables in Lua. Pay careful attent
 
 
 # Functions
+
+Similar to Javascript, functions are first class objects in Luau. This means that functions can be assigned to variables, passed as arguments to other functions, and returned from other functions. This is a very powerful tool that you should get use
+
+## Syntax
+
+function objects can be created using the lambda syntax:
+
+```
+local add = function(arg1 : number, arg2 : number)
+    return arg1 + arg2
+end
+print(tostring(add(1,2))) -- prints "3"
+```
+
+Once created, a function object can be used like any other value:
+
+```
+-- assign to another variable
+local myFunction = add
+print(tostring(myFunction(1,2))) -- prints "3"
+
+-- change it to something else
+myfunction = function(arg1 : number, arg2 : number)
+    return arg1 - arg2
+end
+print(tostring(myFunction(1,2))) -- prints "-1"
+```
+
+The perhaps more familiar function declaration syntax used earlier is in fact shorthand for the above. The below definiton is equivalent to the above:
+
+```
+local function add(arg1 : number, arg2 : number)
+    return arg1 + arg2
+end
+```
+
 ## Closures
+<TODO>
+See [https://www.lua.org/pil/6.1.html](https://www.lua.org/pil/6.1.html) 
 
 
+## Callback Pattern
+One of the main uses of functions as first class objects is to pass them as arguments to other functions. This is a common pattern in Luau. For example, the `table.sort` function takes an optional comparison function as an argument:
+
+```
+local myArray = {3, 1, 2}
+table.sort(myArray, function(a, b) return a < b end) -- by default, uses `<` as comparison, so we use `>` here
+print(myArray[1], myArray[2], myArray[3]) -- prints "3 2 1"
+``` 
+
+You will see this pattern all over the place in the Roblox API which uses [events](https://create.roblox.com/docs/scripting/events) e.g.
+
+```
+local Players = game:GetService("Players")
+
+Players.PlayerAdded:Connect(function(player)
+	print(player.Name .. " joined the game!")
+end)
+```
 
 # Built in Libraries
 
