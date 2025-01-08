@@ -88,7 +88,7 @@ In general, an object with a `nil` value  is equivalent to object not existing i
 
 <sub>Global variables can be accessed via the `_G` table i.e. `_G["myGlobalVar"]` however if you ever find yourself wanting to do this please just stop.</sub>
 
-Using global variables us discouraged by 9/10 software engineers so instead please avoid globals as much as possible!!
+Using global variables is discouraged by 9/10 software engineers so instead please avoid globals as much as possible!!
 
 Local variables are variables that are scoped to the block or chunk in which they are declared. Local variables shadow any globals or locals in the parent scope. Local variables are declared with the `local` keyword. If you'd like to create a scope (block) for your local variables, you can use the `do` control expression
 
@@ -101,7 +101,7 @@ end
 print(myLocalVariable) -- prints nil
 ```
 
-All variables in Luau are typed either implicitly on explicitly. We'll go into this more in the typing section.
+All variables in Luau are typed either implicitly or explicitly. We'll go into this more in the typing section.
 
 ```
 local myExplicitlyTypedNumber : number = 76
@@ -144,10 +144,10 @@ The most important addition to Luau is the addition of types. Types add an addit
 In Roblox, the Luau type checker is set to run in nonstrict mode by default. We recommend enabling strict mode by adding the `--!strict` directive to the top of your luau script. If you are using Luau outside of Roblox or with a third party tool like Rojo, there may be other configuration files you can use to globally set what mode of the typechecker
 
 <details>
-  <summary>Luau Typechecker Modes (not important)</summary>
+    <summary>Luau Typechecker Modes (not important)</summary>
 
-  - --!nocheck,
-    - do not run the typechecker
+    - --!nocheck,
+        - do not run the typechecker
     - --!strict
         - (recommended) run the type checker in strict mode
     - --!nonstrict
@@ -230,7 +230,7 @@ The first 4 are the very basic types. The remaining types will be covered in oth
 
 ## nil
 
-The `nil` _type_ can also take the _value_ `nil`. The `nil` _value_ can still be the type of all other types (except the `never` type). The nil type is special and is also rarely useful. Don't worry too much about it. 
+The `nil` _type_ can also take the _value_ `nil`. The `nil` _value_ can still be a value of all other types (except the `never` type, more on that later). The `nil` type is special and is also rarely useful. Don't worry too much about it. 
 
 ## number
 
@@ -322,7 +322,6 @@ end
 ```
 local a: string = unknown() -- not ok
 local b: number = unknown() -- not ok
-local c: string | number = unknown() -- not ok
 ```
 
 In order to turn a variable of type `unknown` into a different type, you must apply type refinements on that variable.
@@ -469,7 +468,7 @@ You can force a value to be a certain type with the `::` symbol. This is called 
 local a : string | number = 1
 local b : number = a -- not ok
 local c : number = a :: number -- ok
-local d : string = x :: string -- ok, but d will not actually be a string
+local d : string = a :: string -- ok, but d will not actually be a string
 print(d) -- error! can't print a number! Don't typecast!
 ```
 
@@ -581,7 +580,7 @@ end
 Luau contains a set of built in functions for using tables as arrays. The "array" portion of the table includes all the elements with continuous integer keys starting at 1. You can instantiate such an array with the following syntax:
 
 ```
-local myArray = {c, o, w}
+local myArray = {"c", "o", "w"}
 print(myArray[1] .. myArray[2] .. myArray[3]) -- prints "cow"
 ```
 
@@ -604,7 +603,7 @@ print(myArray[4]) -- prints nothing
 Luau tables have no order however we can at least iterate over the array portion of a table in the expected order. To "sort" a table, we can use the `sort` function which sorts the values in the array portion of the table (changing their indices). 
 
 ```
-local myArray = {w, o, c}
+local myArray = {"w", "o", "c"}
 print(myArray[1] .. myArray[2] .. myArray[3]) -- prints "woc"
 sort(myArray)
 print(myArray[1] .. myArray[2] .. myArray[3]) -- prints "cow"
@@ -652,15 +651,28 @@ print(myTable.name) -- prints "Alice"
 myTable["age"] = 25
 print(myTable["age"]) -- prints 25
 print(myTable.age) -- prints 25
+```
+
+You can even use other tables as table keys
+
+```
+local someTable = {}
+local someOtherTable = {}
+local myTable = {}
+myTable[someTable] = "hello"
+myTable[someOtherTable] = "world"
+print(myTable[someTable]) -- prints "hello"
+print(myTable[someOtherTable]) -- prints "world"
 ``` 
+
 
 You can also use this syntax when constructing tables
     
 ```
 local nameKey = "name"
-local ageKey
+local ageKey = "age"
 local myTable = {
-    [nameKey] = "Alice"
+    [nameKey] = "Alice",
     [ageKey] = 25
 }
 print(myTable.name, myTable.age) -- prints "Alice 25"
