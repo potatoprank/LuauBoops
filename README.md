@@ -1,16 +1,11 @@
-
-WIP PLEASE COME BACK LATER
-
-
 # Introduction 
-
 [Luau](https://luau.org/) is an open source general purpose programming language that is developed and maintained by [Roblox](https://roblox.com). Luau is a superset of [Lua](https://www.lua.org/) and introduce many new features most notably typing! It is often used to develop experiences for [Roblox](https://roblox.com). This is guide is mainly written for folks who have some familiarity with programming and would like to start using Luau! If you are new to programming and would like to learn Luau for the purpose of writing your own Roblox game, we suggest you get started on the [creator docs site](https://create.roblox.com/docs)!
 
 We aim to keep as much of this content as general as accessible as possible and many parts will explicity mention how to use Luau with Roblox. Sections that are entirely new to Luau are tagged with `Luau`. If you are skimming through the guide because you are already familiar with Lua, these are the sections you want to pay attention to!
 
 This guide takes much inspiration (and some content) from the freely available online [Programming in Lua](https://www.lua.org/pil/) book as well as the resources on the [Luau website](https://luau.org/). Several sections currently link out to the Programming in Lua and you can easily infer the Luau types for the content in that guide after reading this one!
 
-This guide was started as a Roblox Hack Week project. We aim to grow and evolve this guide over time and the current version should already be more than enough to really get you going with Luau!
+This guide was started as a Roblox Hack Week project. We aim to grow and evolve this guide over time and the current version should already be more than enough to really get you going with Luau! Please open issues or PRs on github <TODO link> if you have any ideas to improve the guide!
 
 # Additional Resources
 
@@ -381,7 +376,6 @@ The Luau `boolean` type has two values: `true` and `false`, these are frequently
 # More on types
 
 ## The `typeof` function
-
 You can determine the type of a variable with the `typeof` function
 
 ```
@@ -392,7 +386,6 @@ print(typeof(x)) -- prints "number"
 This has various uses beyond telling you the type of a variable which we will cover soon!
 
 ## never, any, unknown types
-
 `unknown` is the "top type", that is it’s a union of all types. An `unknown` typed variable can take on any value. 
 
 ```
@@ -450,7 +443,6 @@ local y: string = x -- no type errors here!
 
 
 ## union types
-
 Types can be unioned with the `|` _type_ operator. For example
 
 ```
@@ -472,14 +464,12 @@ Using symbols from math, we say `number` ⊆ `number | string` to indicate that 
 The above is already very useful and this is not the only way to have subtypes. The subtyping relation will become much more relevant when we cover table types!
 
 ## type refinements
-
 <TODO copy from website, add formal definiton for truthy>
 
 Note. There are some limitations in the current Luau type checker when it comes to type inference and type refinement. There is a new typechecker (to be released someday) that will solve many of these issues!
 
 
 ## function types
-
 Functions are first class objects in Luau and have their own type syntax. 
 
 To declare a typed function e.g.
@@ -498,7 +488,6 @@ f = myTypedFunction
 ```
 
 ### multiple return values
-
 If your function returns multiple values you can use the following syntax e.g.
 
 ```
@@ -512,12 +501,9 @@ local num, things = gimme()
 ```
 
 ### variadic args
-
 <TODO you can do better than the one on the luau lang website>
 
-
 ### type inference on functions
-
 Let’s start with something simple.
 
 ```
@@ -551,7 +537,6 @@ In general though, it is this author's opinion that it is better to always expli
 This is SUPER DUPER important. This is covered in the table section!
 
 ## typecasting
-
 You can force a value to be a certain type with the `::` symbol. This is called typecasting. You can only typecast if the value type shares a subtype with the type being casted too. Luau can not verify that the typecast will be valid during runtime. For this reason avoid typecasting as much as possible.
 
 ```
@@ -566,7 +551,6 @@ Typecasting is mainly useful when working with untyped Lua code or when you need
 
 
 # Value + Reference + Immutable types
-
 In Luau, variables are either value or reference types. The value of a variable is the actual data that the variable holds. The reference of a variable is the location in memory where the data is stored.
 
 The following primitive types in Luau are value types:
@@ -666,7 +650,6 @@ end
 ```
 
 ## As Arrays
-
 Luau contains a set of built in functions for using tables as arrays. The "array" portion of the table includes all the elements with continuous integer keys starting at 1. You can instantiate such an array with the following syntax:
 
 ```
@@ -807,15 +790,10 @@ Here are some common gotchas when working with tables in Lua. Pay careful attent
 - Tables are passed by reference. When you pass a table to a function, you are passing a reference to the table, not a copy of the table. This means that if you modify the table in the function, the changes will be reflected outside of the function.
 - Luau table types take a bit to get use to as the static type checker will do it's best to update the type as you add and remove items from the table. Understanding how the typechecker works for tables will eliminate a lot of potential bugs so it's worth getting use to!!
 
-## new Luau table stuff (maybe move to advanced section)
-<TODO>
-
 # Functions
-
 Similar to Javascript, functions are first class objects in Luau. This means that functions can be assigned to variables, passed as arguments to other functions, and returned from other functions. This is a very powerful tool that you should get use
 
 ## Syntax
-
 function objects can be created using the lambda syntax:
 
 ```
@@ -886,10 +864,9 @@ The `io` provides functions for reading and writing files. These methods are usu
 
 
 
-# New Luau Primitives!
+# More Primitives!
 
-
-## userdata types
+## userdata types (th)
 
 Luau is intended for use as an embedded language. That's why if you've ever read the Lua manual you'll notice that the majority is dedicated to the [C API for embedding Lua](https://www.lua.org/manual/5.1/manual.html#3) in your program <sub>(yes, I linked the 5.1 Lua manual... we still need to write one for Luau...)</sub>
 
@@ -904,7 +881,7 @@ myInstance.location = "Canada" -- `location` is not a property of myInstance, th
 
 Roblox data types are all documented on the very useful [Roblox Creator Docs](https://create.roblox.com/docs/reference/engine) site.
 
-## vector
+## vector (new to Luau)
 
 The Luau vector type represents a 3D vector. This is in fact the same type as the differently named [`Vector3` type in Roblox](https://create.roblox.com/docs/reference/engine/datatypes/Vector3) although currently the type checker thinks they are different (we'll fix it soon). You can use either the bulit in vector library or the Roblox API variants. The vector library variants are more portable!
 
@@ -912,7 +889,7 @@ The vector type is either 3 or 4 dimensions (x,y,z + w) depending on what the co
 
 To learn more about the vector library, see the [Luau Vector Library](https://luau.org/library#vector-library) page.
 
-## buffer
+## buffer (new to Luau)
 
 The buffer is a fixed size mutable (as in you can modify it's contents) block of memory. All buffer operations are done through the built in `buffer` library. Buffers are useful in applications where bandwidth or performance is critical. Otherwise consider using tables as arrays instead. Note that all buffer library operations convert the contents to and from the `number` or `string` type but the internal representation is still a byte array.
 
@@ -928,18 +905,15 @@ If you are working in Roblox, coroutines are often managed by the [task library]
 # New Luau Features!
 <TODO>
 
-
-
-
+Luau is an actively developed language and new features are being added all the time. You can propose and discuss new features on the [Luau RFCs github page](https://github.com/luau-lang/rfcs).
 
 # Luau Tooling
 
 Luau is open source and has a number super useful community supported tooling!
 
-<TODO lune, wally, npm, linter, useful libraries,>
+<TODO lune, wally/rotriever/npm/thenewthing/robloxsnewthing, new wally, aftman/forman/thenewthing, linter, useful libraries,>
 
 Please see the [Third Party Tools](https://create.roblox.com/docs/projects/external-tools) for using Luau tooling with Roblox.
-
 
 # Roblox UI in Luau
 ## native
@@ -958,13 +932,63 @@ React-lua is a port of React to Luau. React is an industry standard for many web
 
 ## Metatables
 
-### Object Oriented Programming 🙅🏻‍♀️
+Metatables are a powerful feature in Luau allowing you to modify the behavior of tables. It is this author's opinion that metatables just make your code harder to read and understand in most cases and should be avoided. Still, they are widely used so you should be aware of them. This section of the guide is very incomplete. I may finish it in the future or not. Please see the [Programming in Lua](https://www.lua.org/pil/13.html) book for more information on metatables for now.
+
+Luau doesn't exactly have built in support for typing tables with metatables. The metatables is just treated like any other keyed entry in the table if I'm not mistaken. This makes typing tables with metatables a bit of a pain which is another reason to avoid metatables. I will write a proper guide on how to type tables with metatabels as soon as I figure out how to do it myself.
+
+### Object Oriented Programming 🙅🏻‍♀️ (based)
+
+Since Object Oriented Programming with super popular for a while all the non object oriented languages added pseudo support for object oriented programming and Lua was no exception. Pseudo object oriented programming in Lua is done with metatables and it is just as awful as when they tried to do it in Javascript before adding native suipport. Please avoid as much as possible with perhaps the one exception of making container classes (e.g. queue, stack, etc).
+
+If you really must, please see the [Programming in Lua](https://www.lua.org/pil/16.html) book for more information on object oriented programming in Lua. OOP is used extensively in other Lua libraries so you probably will want to know it at some point :|.
+
+The one thing you should be aware is that Luau (and Lua) has built in special syntax to support "member functions"
+
+``` 
+local Booper = {}
+function Booper.boop()
+    print("boop!")
+end
+Booper:boop() -- prints "boop!"
+```
+
+To make these operations stateful:
+
+```
+local BoopCounter = {}
+function BoopCounter.boop(self)
+    self.count = self.count + 1
+end
+
+local myBoopCounter = {count = 0}
+print (myBoopCounter.count) -- prints 0
+BoopCounter.boop(myBoopCounter)
+print (myBoopCounter.count) -- prints 1
+```
+
+Furthermore you can use the `:` syntax to implicitly pass the table as the first argument to the function. This is just syntactic sugar and is equivalent to the above.
+
+```
+function BoopCounter:boop()
+    self.count = self.count + 1
+end
+```
+
+If the above looks weird and confusing perhaps becaues you are familiar with objected oriented programming or perhaps just because it's weird and confusion, then you are absolutely right. Luau does not natively support object oriented programming beyond the syntactic sugar above and instead relies on the prototype pattern to implement them. The prototype pattern is in this author's opinion a half baked pattern to implement OOP in functional languages that should be avoided. IT is like a blobby amalgamation of the class definiton and the object itself which has a method to poop out mini blobs tied to the parent prototype blob and is a confusing mess.
+
 ### Functional Programming 🙆‍♀️
 
 
 ## Frozen Tables
-<TODO>
-See the [table library](https://luau.org/library#table-library) for more information on frozen tables.
+You can "freeze" a table to make it read-only.
+
+```
+local 🥶 = {1, 2, 3}
+table.freeze(🥶)
+🥶[1] = 4 -- this will raise an error
+```
+
+See the [table library](https://luau.org/library#table-library) for more information on frozen tables. 
 
 ## Weak Tables
 Luau is a managed language meaning it's objects are automatically "garbage collected" and it's memory freed when there are no longer any "strong references" to that object. In general, anytime you assign an object to a variable or table, it becomes a strong reference to that object. A "weak reference" is a reference to an object that does not prevent the object from being garbage collected. Weak references are only available as keys and values in Luau tables. To create a table with weak keys, set the `__mode` field of the metatable to `"k"`. To create a table with weak values, set the `__mode` field of the metatable to `"v"`. To create a table with weak keys and values, set the `__mode` field of the metatable to `"kv"`.
