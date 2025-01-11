@@ -111,25 +111,115 @@ local myImplicitlyTypedNumber = 32
 
 ## Control
 
-<TODO add stuff from https://luau.org/syntax>
+Luau contains the standard control structures you would expect in a programming language. There are some subtleties to how expressions are evaluated but otherwise this is mostly what you'd expect from a programming language. Feel free to skim this section and then jump to the Gotchas section at the end.
 
 ## Expressions
-This seciton covers relational and logical operators. String and table expressions are covered in later sections.
+This section covers relational and logical operators. String and table expressions are covered in later sections.
 ### Relational Expressions
 ### Logical Expressions
 
 ### Conditional Control
+
+#### If
+Luau supports `if`, `else` and `elseif` for conditionally executing code. The syntax is as follows:
+
+``` 
+if condition1 then
+    -- code to execute if condition1 is true
+elseif condition2 then
+    -- code to execute if condition2 is true
+else
+    -- code to execute if neither condition1 nor condition2 is true
+end
+```
+
 #### Conditional Expressions
+
 In Luau, any value may be used as a condition. Conditionals (e.g. `if <condition>`) regard `false` and `nil` as false and everything else as true including `0` and the empty string `""`.
+
 ### Loops
+
 #### numeric for 
+
+The numeric `for` loop is used to iterate over a range of numbers. The syntax is as follows:
+
+```
+for i = start, stop, step do
+    -- code to execute
+end
+``` 
+
+where `start`, `stop`, and `step` are Luau expressions that evaluate to numbers (often just number literals). The loop will start at `start`, increment by `step` until it equals `stop`. If `step` is not provided, it defaults to `1`. If `step` is negative, the loop will decrement instead of increment.
+
+```
+for i = 1, 5 do
+    print("meow ")
+end
+-- prints "meow meow meow meow meow"
+```
+
+There are some subtleties to the numeric `for` loop. Please see [Programming in Lua 4.3](https://www.lua.org/pil/4.3.html) for more info.
+
 #### generic for
 
-you can make 
+Luau also supports generic for using iterators. These are fuctions that return the next value in a sequence which the `for` will iterate over. Writing your own iterators is an advance topic. Please see [Programming in Lua 7.1](https://www.lua.org/pil/7.1.html) for more info.
+
+Generic for is often used to iterate over the elements of a table. In Luau it is possible to iterate over tables directly with `for`. This is covered in the table section later.
+
+```
+-- Lua way using iterator returned by `pairs` function
+for key, value in pairs(myTable) do
+    -- code to execute
+end
+
+-- Luau way
+for key, value in myTable do
+    -- code to execute
+end
+``` 
+
 #### while
+
+This is more or less what you would expect:
+
+``` 
+local x = 0
+while x < 10 do
+    print("meow ")
+    x = x + 1
+end
+-- prints "meow meow meow meow meow meow meow meow meow meow"
+```
+
 #### repeat
+
+This is Luau's "do until" loop. It is similar to a `while` loop except the condition is checked at the end of the loop. This means the loop will always execute at least once.
+
+```
+repeat
+    print("meow ")
+until false
+-- prints "meow"
+```
+
 #### break
 
+The `break` statement is used to exit a loop early. It can be used in any loop construct.
+
+```
+local x = 0
+while true do
+    print("meow ")
+    x = x + 1
+    if x == 5 then
+        break
+    end
+end
+-- prints "meow meow meow meow meow"
+``` 
+
+### Gotchas
+TODO
 
 
 ## Functions (basic)
@@ -718,7 +808,7 @@ Here are some common gotchas when working with tables in Lua. Pay careful attent
 - Luau table types take a bit to get use to as the static type checker will do it's best to update the type as you add and remove items from the table. Understanding how the typechecker works for tables will eliminate a lot of potential bugs so it's worth getting use to!!
 
 ## new Luau table stuff (maybe move to advanced section)
-
+<TODO>
 
 # Functions
 
