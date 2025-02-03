@@ -1,7 +1,7 @@
 # Introduction 
 [Luau](https://luau.org/) is an open source general purpose programming language that is developed and maintained by [Roblox](https://roblox.com). Luau is a superset of [Lua](https://www.lua.org/) and introduce many new features most notably typing! It is often used to develop experiences for [Roblox](https://roblox.com). This is guide is mainly written for folks who have some familiarity with programming and would like to start using Luau! If you are new to programming and would like to learn Luau for the purpose of writing your own Roblox game, we suggest you get started on the [creator docs site](https://create.roblox.com/docs)!
 
-We aim to keep as much of this content as general as accessible as possible and many parts will explicity mention how to use Luau with Roblox. Sections that are entirely new to Luau are tagged with `Luau`. If you are skimming through the guide because you are already familiar with Lua, these are the sections you want to pay attention to!
+We aim to keep as much of this content as general and accessible as possible and many parts will explicitly mention how to use Luau with Roblox. Sections that are entirely new to Luau are tagged with `Luau`. If you are skimming through the guide because you are already familiar with Lua, these are the sections you want to pay attention to!
 
 This guide takes much inspiration (and some content) from the freely available online [Programming in Lua](https://www.lua.org/pil/) book as well as the resources on the [Luau website](https://luau.org/). Several sections currently link out to the Programming in Lua and you can easily infer the Luau types for the content in that guide after reading this one!
 
@@ -16,13 +16,13 @@ This guide was started as a Roblox Hack Week project. We aim to grow and evolve 
 While Luau can be used as a standalone language, it is almost always embedded as a scripting language in another program such as Roblox. The easiest way to get started with writing and running Luau code is with the [Luau online interpreter](https://luau.org/demo). The next easiest way is...
 
 ## With Roblox
-To get started with Luau in Roblox, go to the [Roblox Creator Hub](https://create.roblox.com/), log in/make an account, and download Roblox Studio. From the templates tab, create a new empty Baseplate project. Then in the explorer widget, write click under "workspace" and create a new script. To test your script, press the ▶️ button and you should see any output (from `print` commands which we will introduce later) in the Console widget.
+To get started with Luau in Roblox, go to the [Roblox Creator Hub](https://create.roblox.com/), log in/make an account, and download Roblox Studio. From the templates tab, create a new empty Baseplate project. Then in the explorer widget, right-click under "workspace" and create a new script. To test your script, press the ▶️ button and you should see any output (from `print` commands which we will introduce later) in the Console widget.
 
 The built in Roblox script editor will automatically run the Luau typechecker on your code and tell you if there are any errors
 
 <TODO screenshot>
 
-If you are using tools like LFS or Rojo to develop code in Visual Studio Code, you can use the community created [Luau Language Server](https://marketplace.visualstudio.com/items?itemName=JohnnyMorganz.luau-lsp) extension to get the same typechecking experience in your editor!
+If you are using tools like Luau filesync or [Rojo](https://rojo.space/) to develop code in Visual Studio Code, you can use the community created [Luau Language Server](https://marketplace.visualstudio.com/items?itemName=JohnnyMorganz.luau-lsp) extension to get the same typechecking experience in your editor!
 
 <TODO screenshot>
 
@@ -54,9 +54,9 @@ TLDR to run Luau on Roblox, create a `Script` instance and hit the playtest butt
 
 ## Variables
 
-Variables are about what you'd expect in Luau. Variables can be assigned to with the `=` operator. 
+Variables are about what you'd expect in Luau. Variables are assigned with the `=` operator. 
 
-Global variables do not need to be declared. You simple assign to them and they get created if they don't already exist or assigned to if they do.
+Global variables do not need to be declared. You simply assign them, and they're created if they don't already exist or assigned if they do.
 
 ```
 myGlobalVar = "I created a global variable"
@@ -68,7 +68,7 @@ To remove a global variable, you simply assign `nil` to it
 myGlobalVar = nil
 ```
 
-In general, an object with a `nil` value  is equivalent to object not existing in Luau. You will see more of this in the tables section.
+In general, an object with a `nil` value  is equivalent to an object not existing in Luau. You will see more of this in the tables section.
 
 <sub>Global variables can be accessed via the `_G` table i.e. `_G["myGlobalVar"]` however if you ever find yourself wanting to do this please just stop.</sub>
 
@@ -235,7 +235,7 @@ To declare the type of a variable, use the `:` symbol. For example, to declare a
 
 `local myTypedNumber : number`
 
-Variables in functions are type in the same way, and the return type is added at the end:
+Variables in functions are typed in the same way, and the return type is added at the end:
 
 ```
 local function parrot(wordToSay : string, numberTimes : string) : string
@@ -631,7 +631,7 @@ myTable.name = nil
 To check if a key exists in a table:
 
 ```
-if myTable.name != nil then
+if myTable.name ~= nil then
     print("name exists")
 else
     print("name does not exist")
@@ -741,7 +741,7 @@ print(myTable.name, myTable.age) -- prints "Alice 25"
 ```
 
 ## As Objects
-Tables are often used as objects in Lua. A common pattern is to create an explicitly typed table to representy our object and create a set of functions that operate on that table. 
+Tables are often used as objects in Lua. A common pattern is to create an explicitly typed table to represent your object and create a set of functions that operate on that table. 
 
 ```
 type Person = {
@@ -862,7 +862,7 @@ Roblox data types are all documented on the very useful [Roblox Creator Docs](ht
 
 The Luau vector type represents a 3D vector. This is in fact the same type as the differently named [`Vector3` type in Roblox](https://create.roblox.com/docs/reference/engine/datatypes/Vector3) although currently the type checker thinks they are different (we'll fix it soon). You can use either the bulit in vector library or the Roblox API variants. The vector library variants are more portable!
 
-The vector type is either 3 or 4 dimensions (x,y,z + w) depending on what the compile time `LUA_VECTOR_SIZE` flag is set to. 3 component vectors work like you would expect representing x y and z components. Roblox is configered to use 3 component vectors. 4 component vectors are needed for affine transformations which allow for things like translations to be represented as a matrices. This is super duper useful for computer graphics and much less useful for most games on Roblox. 4 component vectors are not useable on Roblox and thus are not covered in this guide.
+The vector type is either 3 or 4 dimensions (x,y,z + w) depending on what the compile time `LUA_VECTOR_SIZE` flag is set to. 3 component vectors work like you would expect representing x y and z components. Roblox is configured to use 3 component vectors. 4 component vectors are needed for affine transformations which allow for things like translations to be represented as a matrices. This is super duper useful for computer graphics and much less useful for most games on Roblox. 4 component vectors are not useable on Roblox and thus are not covered in this guide.
 
 To learn more about the vector library, see the [Luau Vector Library](https://luau.org/library#vector-library) page.
 
@@ -873,7 +873,7 @@ The buffer is a fixed size mutable (as in you can modify it's contents) block of
 To learn more about the buffer library, see the [Luau Buffer Library](https://luau.org/library#buffer-library) page.
 
 ## thread 
-The `thread` type are used to represent a coroutine. These can be manipulated with the builtin [coroutine library](https://www.lua.org/pil/9.html). The Programming in Lua book has a [good section](https://www.lua.org/pil/9.html) on coroutines if you are interested in learning more about them.
+The `thread` type represents a coroutine. These can be manipulated with the builtin [coroutine library](https://www.lua.org/pil/9.html). The Programming in Lua book has a [good section](https://www.lua.org/pil/9.html) on coroutines if you are interested in learning more about them.
 
 If you are working in Roblox, coroutines are often managed by the [task library](https://create.roblox.com/docs/reference/engine/libraries/task). These methods create coroutines that are managed by the Roblox engine's TaskSchedule such that should not (ever) manually `coroutine.yield` and `coroutine.resume` them. The `thread` type and the `coroutine` type mentioned on the Roblox API website are the same.
 
@@ -887,7 +887,7 @@ Luau is an actively developed language and new features are being added all the 
 Luau is open source and has a number super useful community supported tooling! This section is rather opinionated.
 
 ## Rojo
-In Roblox, scripts are part of the [Datamodel](https://create.roblox.com/docs/reference/engine/classes/DataModel). This is great for working in Roblox Studio but not so great for working with version control systems like Git. Rojo is a tool that allows you to work with your Roblox scripts in a text editor and then sync them with Roblox Studio. Beyond synchronizing your scripts with .luau files which you could also do with something like [Studio Script Sync](https://devforum.roblox.com/t/early-preview-studio-script-sync/3257548), Rojo also imposes some project structure on your scripts which can be very useful for organizing your code and managing dependencies. Rojo is used by many of our top devs!!
+In Roblox, scripts are part of the [Datamodel](https://create.roblox.com/docs/reference/engine/classes/DataModel). This is great for working in Roblox Studio but not so great for working with version control systems like Git. [Rojo](https://rojo.space/) is a tool that allows you to work with your Roblox scripts in a text editor and then sync them with Roblox Studio. Beyond synchronizing your scripts with .luau files which you could also do with something like [Studio Script Sync](https://devforum.roblox.com/t/early-preview-studio-script-sync/3257548), Rojo also imposes some project structure on your scripts which can be very useful for organizing your code and managing dependencies. Rojo is used by many of our top devs!!
 
 ## Wally 
 
@@ -901,7 +901,7 @@ For *reasons* there are 3 nearly identical toolchain managers for Luau. [Rokit](
 
 ## Luau Language Server
 
-[The Luau Language Server extension](https://github.com/JohnnyMorganz/luau-lsp) for WSCode provides syntax highlighting, code completion, and type checking for Luau code. This is a must have for any Luau developer! Note there are a couple similar extensions. The above one seems to be the best at this moment.
+[The Luau Language Server extension](https://github.com/JohnnyMorganz/luau-lsp) for VSCode provides syntax highlighting, code completion, and type checking for Luau code. This is a must have for any Luau developer! Note there are a couple similar extensions. The above one seems to be the best at this moment.
 
 ## Lune 
 
@@ -913,7 +913,7 @@ Please see the [Third Party Tools](https://create.roblox.com/docs/projects/exter
 ## native
 All of Roblox's [UI instances](https://create.roblox.com/docs/ui) can be managed with Luau code allowing you to generate UI entirely from Luau. This is the simplest create UI in Roblox. Many creators will author their UI in the Roblox Studio editor and then add Luau code to manage the interactions. You can also create your UI entirely from Luau code.
 
-Using native UI is the simplest way to create UI in Roblox. You may find that you will start running into limitations as your UI needs become mor demanding and complex. Thankfully, there are UI libraries that can help you with this!
+Using native UI is the simplest way to create UI in Roblox. You may find that you will start running into limitations as your UI needs become more demanding and complex. Thankfully, there are UI libraries that can help you with this!
 
 ## fusion
 Fusion is a declarative UI, state management and animation library for Roblox. This is an awesome choice for building UI in Roblox and relatively easy to pick up. Please see [https://elttob.uk/Fusion/0.2/](fusion) for more information on Fusion.
