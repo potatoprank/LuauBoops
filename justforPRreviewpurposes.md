@@ -1,7 +1,7 @@
 # Introduction 
 [Luau](https://luau.org/) is an open source general purpose programming language that is developed and maintained by [Roblox](https://roblox.com). Luau is a superset of [Lua](https://www.lua.org/) and introduce many new features most notably typing! It is often used to develop experiences for [Roblox](https://roblox.com). This is guide is mainly written for folks who have some familiarity with programming and would like to start using Luau! If you are new to programming and would like to learn Luau for the purpose of writing your own Roblox game, we suggest you get started on the [creator docs site](https://create.roblox.com/docs)!
 
-We aim to keep as much of this content as general as accessible as possible and many parts will explicity mention how to use Luau with Roblox. Sections that are entirely new to Luau are tagged with `Luau`. If you are skimming through the guide because you are already familiar with Lua, these are the sections you want to pay attention to!
+We aim to keep as much of this content as general and accessible as possible and many parts will explicitly mention how to use Luau with Roblox. Sections that are entirely new to Luau are tagged with `Luau`. If you are skimming through the guide because you are already familiar with Lua, these are the sections you want to pay attention to!
 
 This guide takes much inspiration (and some content) from the freely available online [Programming in Lua](https://www.lua.org/pil/) book as well as the resources on the [Luau website](https://luau.org/). Several sections currently link out to the Programming in Lua and you can easily infer the Luau types for the content in that guide after reading this one!
 
