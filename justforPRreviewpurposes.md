@@ -16,7 +16,7 @@ This guide was started as a Roblox Hack Week project. We aim to grow and evolve 
 While Luau can be used as a standalone language, it is almost always embedded as a scripting language in another program such as Roblox. The easiest way to get started with writing and running Luau code is with the [Luau online interpreter](https://luau.org/demo). The next easiest way is...
 
 ## With Roblox
-To get started with Luau in Roblox, go to the [Roblox Creator Hub](https://create.roblox.com/), log in/make an account, and download Roblox Studio. From the templates tab, create a new empty Baseplate project. Then in the explorer widget, write click under "workspace" and create a new script. To test your script, press the ▶️ button and you should see any output (from `print` commands which we will introduce later) in the Console widget.
+To get started with Luau in Roblox, go to the [Roblox Creator Hub](https://create.roblox.com/), log in/make an account, and download Roblox Studio. From the templates tab, create a new empty Baseplate project. Then in the explorer widget, right-click under "workspace" and create a new script. To test your script, press the ▶️ button and you should see any output (from `print` commands which we will introduce later) in the Console widget.
 
 The built in Roblox script editor will automatically run the Luau typechecker on your code and tell you if there are any errors
 
