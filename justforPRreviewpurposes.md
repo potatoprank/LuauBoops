@@ -631,7 +631,7 @@ myTable.name = nil
 To check if a key exists in a table:
 
 ```
-if myTable.name != nil then
+if myTable.name ~= nil then
     print("name exists")
 else
     print("name does not exist")
