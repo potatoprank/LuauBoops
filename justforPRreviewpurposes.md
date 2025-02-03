@@ -862,7 +862,7 @@ Roblox data types are all documented on the very useful [Roblox Creator Docs](ht
 
 The Luau vector type represents a 3D vector. This is in fact the same type as the differently named [`Vector3` type in Roblox](https://create.roblox.com/docs/reference/engine/datatypes/Vector3) although currently the type checker thinks they are different (we'll fix it soon). You can use either the bulit in vector library or the Roblox API variants. The vector library variants are more portable!
 
-The vector type is either 3 or 4 dimensions (x,y,z + w) depending on what the compile time `LUA_VECTOR_SIZE` flag is set to. 3 component vectors work like you would expect representing x y and z components. Roblox is configered to use 3 component vectors. 4 component vectors are needed for affine transformations which allow for things like translations to be represented as a matrices. This is super duper useful for computer graphics and much less useful for most games on Roblox. 4 component vectors are not useable on Roblox and thus are not covered in this guide.
+The vector type is either 3 or 4 dimensions (x,y,z + w) depending on what the compile time `LUA_VECTOR_SIZE` flag is set to. 3 component vectors work like you would expect representing x y and z components. Roblox is configured to use 3 component vectors. 4 component vectors are needed for affine transformations which allow for things like translations to be represented as a matrices. This is super duper useful for computer graphics and much less useful for most games on Roblox. 4 component vectors are not useable on Roblox and thus are not covered in this guide.
 
 To learn more about the vector library, see the [Luau Vector Library](https://luau.org/library#vector-library) page.
 
