@@ -901,7 +901,7 @@ For *reasons* there are 3 nearly identical toolchain managers for Luau. [Rokit](
 
 ## Luau Language Server
 
-[The Luau Language Server extension](https://github.com/JohnnyMorganz/luau-lsp) for WSCode provides syntax highlighting, code completion, and type checking for Luau code. This is a must have for any Luau developer! Note there are a couple similar extensions. The above one seems to be the best at this moment.
+[The Luau Language Server extension](https://github.com/JohnnyMorganz/luau-lsp) for VSCode provides syntax highlighting, code completion, and type checking for Luau code. This is a must have for any Luau developer! Note there are a couple similar extensions. The above one seems to be the best at this moment.
 
 ## Lune 
 
