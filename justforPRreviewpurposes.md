@@ -22,7 +22,7 @@ The built in Roblox script editor will automatically run the Luau typechecker on
 
 <TODO screenshot>
 
-If you are using tools like LFS or Rojo to develop code in Visual Studio Code, you can use the community created [Luau Language Server](https://marketplace.visualstudio.com/items?itemName=JohnnyMorganz.luau-lsp) extension to get the same typechecking experience in your editor!
+If you are using tools like Luau filesync or [Rojo](https://rojo.space/) to develop code in Visual Studio Code, you can use the community created [Luau Language Server](https://marketplace.visualstudio.com/items?itemName=JohnnyMorganz.luau-lsp) extension to get the same typechecking experience in your editor!
 
 <TODO screenshot>
 
@@ -887,7 +887,7 @@ Luau is an actively developed language and new features are being added all the 
 Luau is open source and has a number super useful community supported tooling! This section is rather opinionated.
 
 ## Rojo
-In Roblox, scripts are part of the [Datamodel](https://create.roblox.com/docs/reference/engine/classes/DataModel). This is great for working in Roblox Studio but not so great for working with version control systems like Git. Rojo is a tool that allows you to work with your Roblox scripts in a text editor and then sync them with Roblox Studio. Beyond synchronizing your scripts with .luau files which you could also do with something like [Studio Script Sync](https://devforum.roblox.com/t/early-preview-studio-script-sync/3257548), Rojo also imposes some project structure on your scripts which can be very useful for organizing your code and managing dependencies. Rojo is used by many of our top devs!!
+In Roblox, scripts are part of the [Datamodel](https://create.roblox.com/docs/reference/engine/classes/DataModel). This is great for working in Roblox Studio but not so great for working with version control systems like Git. [Rojo](https://rojo.space/) is a tool that allows you to work with your Roblox scripts in a text editor and then sync them with Roblox Studio. Beyond synchronizing your scripts with .luau files which you could also do with something like [Studio Script Sync](https://devforum.roblox.com/t/early-preview-studio-script-sync/3257548), Rojo also imposes some project structure on your scripts which can be very useful for organizing your code and managing dependencies. Rojo is used by many of our top devs!!
 
 ## Wally 
 
