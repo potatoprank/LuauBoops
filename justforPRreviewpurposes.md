@@ -54,7 +54,7 @@ TLDR to run Luau on Roblox, create a `Script` instance and hit the playtest butt
 
 ## Variables
 
-Variables are about what you'd expect in Luau. Variables can be assigned to with the `=` operator. 
+Variables are about what you'd expect in Luau. Variables are assigned with the `=` operator. 
 
 Global variables do not need to be declared. You simple assign to them and they get created if they don't already exist or assigned to if they do.
 
