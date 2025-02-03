@@ -913,7 +913,7 @@ Please see the [Third Party Tools](https://create.roblox.com/docs/projects/exter
 ## native
 All of Roblox's [UI instances](https://create.roblox.com/docs/ui) can be managed with Luau code allowing you to generate UI entirely from Luau. This is the simplest create UI in Roblox. Many creators will author their UI in the Roblox Studio editor and then add Luau code to manage the interactions. You can also create your UI entirely from Luau code.
 
-Using native UI is the simplest way to create UI in Roblox. You may find that you will start running into limitations as your UI needs become mor demanding and complex. Thankfully, there are UI libraries that can help you with this!
+Using native UI is the simplest way to create UI in Roblox. You may find that you will start running into limitations as your UI needs become more demanding and complex. Thankfully, there are UI libraries that can help you with this!
 
 ## fusion
 Fusion is a declarative UI, state management and animation library for Roblox. This is an awesome choice for building UI in Roblox and relatively easy to pick up. Please see [https://elttob.uk/Fusion/0.2/](fusion) for more information on Fusion.
