@@ -68,7 +68,7 @@ To remove a global variable, you simply assign `nil` to it
 myGlobalVar = nil
 ```
 
-In general, an object with a `nil` value  is equivalent to object not existing in Luau. You will see more of this in the tables section.
+In general, an object with a `nil` value  is equivalent to an object not existing in Luau. You will see more of this in the tables section.
 
 <sub>Global variables can be accessed via the `_G` table i.e. `_G["myGlobalVar"]` however if you ever find yourself wanting to do this please just stop.</sub>
 
