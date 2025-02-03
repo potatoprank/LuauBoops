@@ -873,7 +873,7 @@ The buffer is a fixed size mutable (as in you can modify it's contents) block of
 To learn more about the buffer library, see the [Luau Buffer Library](https://luau.org/library#buffer-library) page.
 
 ## thread 
-The `thread` type are used to represent a coroutine. These can be manipulated with the builtin [coroutine library](https://www.lua.org/pil/9.html). The Programming in Lua book has a [good section](https://www.lua.org/pil/9.html) on coroutines if you are interested in learning more about them.
+The `thread` type represents a coroutine. These can be manipulated with the builtin [coroutine library](https://www.lua.org/pil/9.html). The Programming in Lua book has a [good section](https://www.lua.org/pil/9.html) on coroutines if you are interested in learning more about them.
 
 If you are working in Roblox, coroutines are often managed by the [task library](https://create.roblox.com/docs/reference/engine/libraries/task). These methods create coroutines that are managed by the Roblox engine's TaskSchedule such that should not (ever) manually `coroutine.yield` and `coroutine.resume` them. The `thread` type and the `coroutine` type mentioned on the Roblox API website are the same.
 
