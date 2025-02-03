@@ -741,7 +741,7 @@ print(myTable.name, myTable.age) -- prints "Alice 25"
 ```
 
 ## As Objects
-Tables are often used as objects in Lua. A common pattern is to create an explicitly typed table to representy our object and create a set of functions that operate on that table. 
+Tables are often used as objects in Lua. A common pattern is to create an explicitly typed table to represent your object and create a set of functions that operate on that table. 
 
 ```
 type Person = {
