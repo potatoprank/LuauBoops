@@ -235,7 +235,7 @@ To declare the type of a variable, use the `:` symbol. For example, to declare a
 
 `local myTypedNumber : number`
 
-Variables in functions are type in the same way, and the return type is added at the end:
+Variables in functions are typed in the same way, and the return type is added at the end:
 
 ```
 local function parrot(wordToSay : string, numberTimes : string) : string
