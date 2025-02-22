@@ -520,7 +520,7 @@ print(greetings("Alexander"))          -- ok
 print(greetings({name = "Alexander"})) -- not ok
 ```
 
-In general though, it is this author's opinion that it is better to explicitly type your functions except perhaps in cases where your function is truly generic like in the simple example above. Top level functions that are exported from the module should always be explicitly typed.
+In general though, it is this author's opinion that it is better to explicitly type your functions except perhaps in cases where your function is generic like in the simple example above. Top level functions that are exported from the module should always be explicitly typed.
 
 ## table types, table indexers and intersection types
 This is SUPER DUPER important. This is covered in the table section!
